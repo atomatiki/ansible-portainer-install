@@ -1,0 +1,47 @@
+---
+# tasks file for portainer
+
+- name: Configuring portainer docker
+  block:
+
+    # Create Portainer Volume
+    # --
+    # 
+    - name: Create new Volume
+      community.docker.docker_volume:
+        name: portainer-data
+      register: v_output
+      ignore_errors: true
+
+    - name: Debug Portainer Volume
+      ansible.builtin.debug:
+        var: v_output
+
+
+    # Deploy Portainer
+    # --
+    #   
+    - name: Deploy Portainer
+      block:
+        - name: deployment
+          community.docker.docker_container:
+            name: portainer
+            image: "docker.io/portainer/portainer-ce"
+            ports:
+              - "8000:8000"
+              - "9000:9000"
+            volumes:
+              - /var/run/docker.sock:/var/run/docker.sock
+              - portainer-data:/data
+            networks:
+              - name: "{{ traefik_docker_network_name }}" # required. Name of the network to operate on.
+            restart_policy: always
+            labels:
+              com.centurylinklabs.watchtower.enable: "false"
+          register: deploy_output
+
+        - name: Debug Portainer deployment
+          ansible.builtin.debug:
+            var: deploy_output
+
+      when: v_output.failed != true

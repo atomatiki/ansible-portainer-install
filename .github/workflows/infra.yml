@@ -1,4 +1,4 @@
-name: Configure Docker
+name: Configure Portainer
 
 on:
   workflow_call:
