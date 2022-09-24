@@ -4,3 +4,6 @@
   
   roles:
     - portainer-install
+    
+  vars:
+    traefik_docker_network_name: traefik_network
