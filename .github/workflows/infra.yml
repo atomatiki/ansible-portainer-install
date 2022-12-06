@@ -1,4 +1,4 @@
-name: Configure Traefik
+name: Configure Portainer
 
 on:
   workflow_dispatch:
