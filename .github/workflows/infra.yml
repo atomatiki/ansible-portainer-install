@@ -53,7 +53,7 @@ jobs:
           mkdir -p portainer-install/vars/
           cat << EOF > portainer-install/vars/main.yaml
           ---
-          HOSTNAME: "${{ inputs.HOSTNAME }}"
+          DOMAIN_NAME: "${{ inputs.DOMAIN_NAME }}"
           EOF
       
       - name: Run main playbook
