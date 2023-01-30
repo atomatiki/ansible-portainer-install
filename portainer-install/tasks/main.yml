@@ -13,6 +13,8 @@
         value: "Host(`{{ DOMAIN_NAME }}`)"
       - key: "traefik.http.routers.portainer.entrypoints"
         value: "websecure"
+      - key: "traefik.http.services.portainer.loadbalancer.server.port"
+        value: "9443"
       - key: "traefik.http.routers.portainer.tls.certresolver"
         value: "production"
 
