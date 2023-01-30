@@ -14,9 +14,7 @@
       - key: "traefik.http.routers.portainer.entrypoints"
         value: "websecure"
       - key: "traefik.http.services.portainer.loadbalancer.server.port"
-        value: "9443"
-      - key: "traefik.http.services.myservice.loadbalancer.server.scheme"
-        value: "https"
+        value: "9000"
       - key: "traefik.http.routers.portainer.tls.certresolver"
         value: "production"
 
@@ -46,7 +44,7 @@
             name: portainer
             image: "docker.io/portainer/portainer-ce"
             expose:
-              - 9443
+              - 9000
             volumes:
               - /var/run/docker.sock:/var/run/docker.sock
               - portainer-data:/data
