@@ -15,6 +15,8 @@
         value: "websecure"
       - key: "traefik.http.services.portainer.loadbalancer.server.port"
         value: "9443"
+      - key: "traefik.http.services.myservice.loadbalancer.server.scheme"
+        value: "https"
       - key: "traefik.http.routers.portainer.tls.certresolver"
         value: "production"
 
