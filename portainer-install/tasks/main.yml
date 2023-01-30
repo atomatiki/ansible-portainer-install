@@ -49,8 +49,7 @@
             networks:
               - name: "{{ traefik_docker_network_name }}" # required. Name of the network to operate on.
             restart_policy: always
-            labels:
-              labels: "{{ image_labels | items2dict }}"
+            labels: "{{ image_labels | items2dict }}"
           register: deploy_output
 
         - name: Debug Portainer deployment
