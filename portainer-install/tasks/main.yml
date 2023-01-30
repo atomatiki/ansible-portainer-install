@@ -2,6 +2,20 @@
 # tasks file for portainer
 
 - name: Configuring portainer docker
+
+  vars:
+    image_labels:
+      - key: "com.centurylinklabs.watchtower.enable"
+        value: "true"
+      - key: "traefik.enable"
+        value: "true"
+      - key: "traefik.http.routers.portainer.rule"
+        value: "Host(`{{ DOMAIN_NAME }}`)"
+      - key: "traefik.http.routers.portainer.entrypoints"
+        value: "websecure"
+      - key: "traefik.http.routers.portainer.tls.certresolver"
+        value: "production"
+
   block:
 
     # Create Portainer Volume
@@ -27,9 +41,8 @@
           community.docker.docker_container:
             name: portainer
             image: "docker.io/portainer/portainer-ce"
-            ports:
-              - "8000:8000"
-              - "9000:9000"
+            expose:
+              - 9443
             volumes:
               - /var/run/docker.sock:/var/run/docker.sock
               - portainer-data:/data
@@ -37,7 +50,7 @@
               - name: "{{ traefik_docker_network_name }}" # required. Name of the network to operate on.
             restart_policy: always
             labels:
-              com.centurylinklabs.watchtower.enable: "false"
+              labels: "{{ image_labels | items2dict }}"
           register: deploy_output
 
         - name: Debug Portainer deployment

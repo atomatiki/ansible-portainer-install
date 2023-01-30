@@ -1,9 +1,12 @@
-name: Configure Portainer
+name: deploy
 
 on:
   workflow_dispatch:
     inputs:
       TARGET_HOST:
+        type: string
+        required: true
+      DOMAIN_NAME:
         type: string
         required: true
 jobs:
@@ -16,7 +19,7 @@ jobs:
       - name: Add SSH Keys
         run: |
           cat << EOF > devops-key
-          ${{ secrets.SSH_PRIVATE_KEY }}
+          ${{ secrets.SSH_DEVOPS_KEY_PRIVATE }}
           EOF
       - name: Update devops private key permissions
         run: |
@@ -43,6 +46,14 @@ jobs:
           host_key_checking=False
           private_key_file = ./devops-key
           retries=2
+          EOF
+
+      - name: Adding Ansible Variables
+        run: |
+          mkdir -p portainer-install/vars/
+          cat << EOF > portainer-install/vars/main.yaml
+          ---
+          HOSTNAME: "${{ inputs.HOSTNAME }}"
           EOF
       
       - name: Run main playbook
