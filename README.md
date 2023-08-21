@@ -12,6 +12,8 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCug/Bna0CaHSWASX8VHKnguIhO4ucGZCv6Y2oD0gJw
 
 Dispatch this workflow while passing your host IP as an input.
 
+Add `SSH_DEVOPS_KEY_PRIVATE` as a secret
+
 > got to Actions > deploy > run workflow
 
 Pass your remote IP and watch it run.
